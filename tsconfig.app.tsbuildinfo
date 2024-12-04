@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/noteshome.tsx"],"version":"5.6.3"}
+{"root":["./src/appdev.tsx","./src/exposes.ts","./src/maindev.tsx","./src/vite-env.d.ts","./src/components/noteshome.tsx","./src/services/notesapislice.ts","./src/types/types.ts"],"version":"5.6.3"}
