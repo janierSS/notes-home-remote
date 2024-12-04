@@ -1,6 +1,6 @@
 import NotesHome from "./components/NotesHome"
 
-function App() {
+function AppDev() {
   return (
     <>
       <NotesHome/>
@@ -8,4 +8,4 @@ function App() {
   )
 }
 
-export default App
+export default AppDev
