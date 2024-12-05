@@ -14,3 +14,9 @@ export type NewNoteResponse = {
   message: string;
   note: Note;
 };
+
+export type GetNotesResponse = Note[]
+
+export type DeleteNoteResponse = {
+  message: string;
+};

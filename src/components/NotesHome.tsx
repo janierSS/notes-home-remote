@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { NewNoteFormValues } from "../types/types";
 import {
   useAddNoteMutation,
+  useDeleteNoteMutation,
   useGetNotesQuery,
 } from "../services/notesApiSlice";
 
@@ -15,8 +16,9 @@ const NotesHome: React.FC = () => {
     formState: { errors },
   } = useForm<NewNoteFormValues>();
 
-  const [addNote] = useAddNoteMutation();
   const { data: notes, isLoading } = useGetNotesQuery();
+  const [addNote] = useAddNoteMutation();
+  const [deleteNote] = useDeleteNoteMutation()
 
   const onSubmit: SubmitHandler<NewNoteFormValues> = (data) => {
     const newNote: NewNoteFormValues = {
@@ -32,6 +34,10 @@ const NotesHome: React.FC = () => {
       })
       .catch((err) => console.log("Error: ", err));
   };
+
+  const handleDelete = (noteId: number) => {
+    deleteNote(noteId)
+  }
 
   return (
     <div>
@@ -73,7 +79,12 @@ const NotesHome: React.FC = () => {
       {/* List of Notes */}
       <ul>
         {notes?.map((note) => (
-          <li key={note.id}>{note.title}</li>
+          <li key={note.id}>
+            <div>
+              <h5>{note.title}</h5>
+              <button onClick={() => handleDelete(note.id)}>Delete</button>
+            </div>
+          </li>
         ))}
       </ul>
     </div>
