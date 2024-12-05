@@ -6,6 +6,7 @@ import {
   useDeleteNoteMutation,
   useGetNotesQuery,
 } from "../services/notesApiSlice";
+import { IoMdAdd } from "react-icons/io";
 import styles from "./NotesHome.module.scss";
 
 const NotesHome: React.FC = () => {
@@ -44,7 +45,7 @@ const NotesHome: React.FC = () => {
     <div className={styles.container}>
       <div className={styles["container__header"]}>
         <h3>Your Notes</h3>
-        <button onClick={() => setShowNewNoteForm(true)}>Add New Note</button>
+        <button className={styles["container__header__add"]} onClick={() => setShowNewNoteForm(true)}><IoMdAdd size={32}/></button>
 
         {showNewNoteForm && (
           <form
