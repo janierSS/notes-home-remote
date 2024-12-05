@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { NewNoteFormValues } from "../types/types";
-import { useAddNoteMutation } from "../services/notesApiSlice";
+import {
+  useAddNoteMutation,
+  useGetNotesQuery,
+} from "../services/notesApiSlice";
 
 const NotesHome: React.FC = () => {
   const [showNewNoteForm, setShowNewNoteForm] = useState(false);
@@ -13,6 +16,7 @@ const NotesHome: React.FC = () => {
   } = useForm<NewNoteFormValues>();
 
   const [addNote] = useAddNoteMutation();
+  const { data: notes, isLoading } = useGetNotesQuery();
 
   const onSubmit: SubmitHandler<NewNoteFormValues> = (data) => {
     const newNote: NewNoteFormValues = {
@@ -60,23 +64,18 @@ const NotesHome: React.FC = () => {
             )}
           </div>
           <button type="submit">Save Note</button>
-          <button
-            type="button"
-            onClick={() => setShowNewNoteForm(false)}
-          >
+          <button type="button" onClick={() => setShowNewNoteForm(false)}>
             Cancel
           </button>
         </form>
       )}
 
       {/* List of Notes */}
-      {/* <ul>
-        {notes.map((note) => (
-          <li key={note.id}>
-            <Link to={`/notes/${note.id}`}>{note.title}</Link>
-          </li>
+      <ul>
+        {notes?.map((note) => (
+          <li key={note.id}>{note.title}</li>
         ))}
-      </ul> */}
+      </ul>
     </div>
   );
 };

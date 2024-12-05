@@ -1,5 +1,5 @@
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
-import { NewNoteFormValues, NewNoteResponse } from "../types/types";
+import { NewNoteFormValues, NewNoteResponse, Note } from "../types/types";
 import selectAuthReceipt from "myNotesHost/selectAuthReceipt";
 
 const dynamicBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
@@ -24,6 +24,7 @@ const dynamicBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryE
 const notesApiSlice = createApi({
   reducerPath: "notesApi",
   baseQuery: dynamicBaseQuery,
+  tagTypes: ['Notes'],
   endpoints: (build) => ({
     addNote: build.mutation<NewNoteResponse, NewNoteFormValues>({
       query: (newNote) => ({
@@ -31,10 +32,18 @@ const notesApiSlice = createApi({
         method: "POST",
         body: newNote,
       }),
+      invalidatesTags: ['Notes'],
     }),
+    getNotes: build.query<Note[], void>({
+      query: () => ({
+        url: "/notes",
+        method: "GET",
+      }),
+      providesTags: ['Notes'],
+    })
   }),
 });
 
-export const { useAddNoteMutation } = notesApiSlice;
+export const { useAddNoteMutation, useGetNotesQuery } = notesApiSlice;
 
 export default notesApiSlice;
