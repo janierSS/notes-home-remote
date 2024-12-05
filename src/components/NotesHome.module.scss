@@ -1,0 +1,34 @@
+.container {
+    font-family: 'Roboto', sans-serif;
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+
+        h3{
+            margin: 0;
+        }
+
+        &__form {
+            position: absolute;
+        }
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        &__item {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            h5{
+                margin: 0;
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { NewNoteFormValues } from "../types/types";
 import {
@@ -6,6 +6,7 @@ import {
   useDeleteNoteMutation,
   useGetNotesQuery,
 } from "../services/notesApiSlice";
+import styles from "./NotesHome.module.scss";
 
 const NotesHome: React.FC = () => {
   const [showNewNoteForm, setShowNewNoteForm] = useState(false);
@@ -18,7 +19,7 @@ const NotesHome: React.FC = () => {
 
   const { data: notes, isLoading } = useGetNotesQuery();
   const [addNote] = useAddNoteMutation();
-  const [deleteNote] = useDeleteNoteMutation()
+  const [deleteNote] = useDeleteNoteMutation();
 
   const onSubmit: SubmitHandler<NewNoteFormValues> = (data) => {
     const newNote: NewNoteFormValues = {
@@ -36,54 +37,57 @@ const NotesHome: React.FC = () => {
   };
 
   const handleDelete = (noteId: number) => {
-    deleteNote(noteId)
-  }
+    deleteNote(noteId);
+  };
 
   return (
-    <div>
-      <h3>Your Notes</h3>
-      <button onClick={() => setShowNewNoteForm(true)}>Add New Note</button>
+    <div className={styles.container}>
+      <div className={styles["container__header"]}>
+        <h3>Your Notes</h3>
+        <button onClick={() => setShowNewNoteForm(true)}>Add New Note</button>
 
-      {showNewNoteForm && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label>
-              Title:
-              <input
-                {...register("title", { required: "Title is required" })}
-                type="text"
-              />
-            </label>
-            {errors.title && (
-              <p style={{ color: "red" }}>{errors.title.message}</p>
-            )}
-          </div>
-          <div>
-            <label>
-              Content:
-              <textarea
-                {...register("content", { required: "Content is required" })}
-              />
-            </label>
-            {errors.content && (
-              <p style={{ color: "red" }}>{errors.content.message}</p>
-            )}
-          </div>
-          <button type="submit">Save Note</button>
-          <button type="button" onClick={() => setShowNewNoteForm(false)}>
-            Cancel
-          </button>
-        </form>
-      )}
+        {showNewNoteForm && (
+          <form
+            className={styles["container__header__form"]}
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div>
+              <label>
+                Title:
+                <input
+                  {...register("title", { required: "Title is required" })}
+                  type="text"
+                />
+              </label>
+              {errors.title && (
+                <p style={{ color: "red" }}>{errors.title.message}</p>
+              )}
+            </div>
+            <div>
+              <label>
+                Content:
+                <textarea
+                  {...register("content", { required: "Content is required" })}
+                />
+              </label>
+              {errors.content && (
+                <p style={{ color: "red" }}>{errors.content.message}</p>
+              )}
+            </div>
+            <button type="submit">Save Note</button>
+            <button type="button" onClick={() => setShowNewNoteForm(false)}>
+              Cancel
+            </button>
+          </form>
+        )}
+      </div>
 
       {/* List of Notes */}
-      <ul>
+      <ul className={styles["container__list"]}>
         {notes?.map((note) => (
-          <li key={note.id}>
-            <div>
-              <h5>{note.title}</h5>
-              <button onClick={() => handleDelete(note.id)}>Delete</button>
-            </div>
+          <li className={styles["container__list__item"]} key={note.id}>
+            <h5>{note.title}</h5>
+            <button onClick={() => handleDelete(note.id)}>Delete</button>
           </li>
         ))}
       </ul>
