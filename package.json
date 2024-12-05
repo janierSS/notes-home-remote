@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "dev": "npm run build && vite",
+    "dev": "npm run build:dev && vite",
     "build": "tsc -b && vite build",
+    "build:dev": "tsc -b && vite build --config vite.config.dev.js",
+    "build:bundle": "tsc -b && vite build --config vite.config.bundle.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
