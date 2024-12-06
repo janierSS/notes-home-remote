@@ -15,10 +15,15 @@ const AddNoteForm: React.FC<AddNoteFormProps> = ({ setShowNewNoteForm }) => {
     handleSubmit,
     reset,
     setFocus,
+    watch,
     formState: { errors },
   } = useForm<NewNoteFormValues>();
 
   const [addNote] = useAddNoteMutation();
+
+  const textValue = watch("content", "");
+  const maxLength = 100;
+  const remainingChars = maxLength - textValue.length;
 
   useEffect(() => {
     setFocus("title");
@@ -57,23 +62,23 @@ const AddNoteForm: React.FC<AddNoteFormProps> = ({ setShowNewNoteForm }) => {
             type="text"
             id="title"
           />
-          {errors.title && (
-            <p className={styles["container__form__inputs__error"]}>
-              {errors.title.message}
-            </p>
-          )}
+          {errors.title && <p>{errors.title.message}</p>}
         </div>
         <div className={styles["container__form__inputs"]}>
           <label htmlFor="content">Content:</label>
           <textarea
-            {...register("content", { required: "Content is required" })}
+            {...register("content", {
+              required: "Content is required",
+            })}
+            maxLength={maxLength}
+            rows={2}
+            cols={50}
             id="content"
           />
-          {errors.content && (
-            <p className={styles["container__form__inputs__error"]}>
-              {errors.content.message}
-            </p>
-          )}
+          <div className={styles["container__form__inputs__counter"]}>
+            <p className={errors.content && styles.show}>{errors.content?.message}</p>
+            <span>{remainingChars}</span>
+          </div>
         </div>
         <button className={styles["container__form__button"]} type="submit">
           Save

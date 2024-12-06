@@ -44,6 +44,7 @@
     gap: 0.75rem;
 
     &__inputs {
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
@@ -68,7 +69,7 @@
       }
 
       textarea {
-        height: 6rem;
+        height: 3rem;
         padding: 0.5rem 0.75rem;
         border-radius: 1rem;
         border: 1px solid #4c3d3d;
@@ -83,9 +84,21 @@
       }
 
       p {
-        margin: 0;
+        margin: 0 0 0 0.5rem;
         color: red;
         font-size: small;
+      }
+
+      &__counter {
+        display: flex;
+        justify-content: space-between;
+        p {
+          visibility: hidden;
+        }
+
+        span {
+          margin-right: 0.5rem;
+        }
       }
     }
 
@@ -106,3 +119,5 @@
     }
   }
 }
+
+.show {visibility: visible !important;}

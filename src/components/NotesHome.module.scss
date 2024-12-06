@@ -1,4 +1,6 @@
 .container {
+  display: flex;
+  flex-direction: column;
   &__header {
     display: flex;
     justify-content: space-between;
@@ -36,6 +38,10 @@
         outline: none;
       }
     }
+  }
+
+  &__empty {
+    align-self: center;
   }
 
   &__list {
@@ -91,7 +97,6 @@
 
         &:active {
           transform: scale(0.95);
-          background-color: #e5c55c;
         }
 
         &:focus-visible {
