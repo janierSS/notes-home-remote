@@ -8,34 +8,14 @@ import {
 } from "../services/notesApiSlice";
 import { IoMdAdd } from "react-icons/io";
 import styles from "./NotesHome.module.scss";
+import AddNoteForm from "./AddNoteForm";
+import Modal from "./Modal";
 
 const NotesHome: React.FC = () => {
   const [showNewNoteForm, setShowNewNoteForm] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<NewNoteFormValues>();
-
   const { data: notes, isLoading } = useGetNotesQuery();
-  const [addNote] = useAddNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
 
-  const onSubmit: SubmitHandler<NewNoteFormValues> = (data) => {
-    const newNote: NewNoteFormValues = {
-      title: data.title,
-      content: data.content,
-    };
-    addNote(newNote)
-      .then((resp) => {
-        if (resp.data.message === "Note added") {
-          reset();
-          setShowNewNoteForm(false);
-        }
-      })
-      .catch((err) => console.log("Error: ", err));
-  };
 
   const handleDelete = (noteId: number) => {
     deleteNote(noteId);
@@ -45,41 +25,17 @@ const NotesHome: React.FC = () => {
     <div className={styles.container}>
       <div className={styles["container__header"]}>
         <h3>Your Notes</h3>
-        <button className={styles["container__header__add"]} onClick={() => setShowNewNoteForm(true)}><IoMdAdd size={32}/></button>
+        <button
+          className={styles["container__header__add"]}
+          onClick={() => setShowNewNoteForm(true)}
+        >
+          <IoMdAdd size={32} />
+        </button>
 
         {showNewNoteForm && (
-          <form
-            className={styles["container__header__form"]}
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <div>
-              <label>
-                Title:
-                <input
-                  {...register("title", { required: "Title is required" })}
-                  type="text"
-                />
-              </label>
-              {errors.title && (
-                <p style={{ color: "red" }}>{errors.title.message}</p>
-              )}
-            </div>
-            <div>
-              <label>
-                Content:
-                <textarea
-                  {...register("content", { required: "Content is required" })}
-                />
-              </label>
-              {errors.content && (
-                <p style={{ color: "red" }}>{errors.content.message}</p>
-              )}
-            </div>
-            <button type="submit">Save Note</button>
-            <button type="button" onClick={() => setShowNewNoteForm(false)}>
-              Cancel
-            </button>
-          </form>
+          <Modal onClose={() => setShowNewNoteForm(false)}>
+            <AddNoteForm setShowNewNoteForm={setShowNewNoteForm} />
+          </Modal>
         )}
       </div>
 
