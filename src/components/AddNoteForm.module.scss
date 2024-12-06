@@ -1,7 +1,7 @@
 .container {
-    background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 1rem;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
 
   &__header {
     display: flex;
@@ -28,7 +28,7 @@
 
       &:hover {
         background-color: #ffd95a;
-        color: #FFFFFF;
+        color: #ffffff;
       }
 
       &:active {
@@ -50,6 +50,36 @@
 
       label {
         font-size: small;
+        margin-left: 0.5rem;
+      }
+
+      input {
+        height: 1.5rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        border: 1px solid #4c3d3d;
+
+        &:focus {
+          border: 2px solid #ffd95a;
+        }
+        &:focus-visible {
+          outline: none;
+        }
+      }
+
+      textarea {
+        height: 6rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: 1rem;
+        border: 1px solid #4c3d3d;
+        resize: none;
+
+        &:focus {
+          border: 2px solid #ffd95a;
+        }
+        &:focus-visible {
+          outline: none;
+        }
       }
 
       p {
@@ -62,8 +92,8 @@
     &__button {
       align-self: end;
       margin-top: 0.5rem;
-      background-color: #4C3D3D;
-      color: #FFFFFF;
+      background-color: #4c3d3d;
+      color: #ffffff;
       border: none;
       border-radius: 1rem;
       padding: 0.5rem 0.75rem;

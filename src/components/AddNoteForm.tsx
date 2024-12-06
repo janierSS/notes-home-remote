@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef, useEffect} from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import styles from "./AddNoteForm.module.scss";
 import { NewNoteFormValues } from "../types/types";
@@ -17,7 +17,15 @@ const AddNoteForm: React.FC<AddNoteFormProps> = ({ setShowNewNoteForm }) => {
     formState: { errors },
   } = useForm<NewNoteFormValues>();
 
+  const usernameRef = useRef<HTMLInputElement>(null);
+
   const [addNote] = useAddNoteMutation();
+
+  useEffect(() => {
+    if (usernameRef.current) {
+      usernameRef.current.focus();
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<NewNoteFormValues> = (data) => {
     const newNote: NewNoteFormValues = {
@@ -50,6 +58,7 @@ const AddNoteForm: React.FC<AddNoteFormProps> = ({ setShowNewNoteForm }) => {
           <input
             {...register("title", { required: "Title is required" })}
             type="text"
+            ref={usernameRef}
           />
           {errors.title && (
             <p className={styles["container__form__inputs__error"]}>{errors.title.message}</p>

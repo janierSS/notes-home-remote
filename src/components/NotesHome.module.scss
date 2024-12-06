@@ -31,6 +31,10 @@
         transform: scale(0.95);
         background-color: #e5c55c;
       }
+      
+      &:focus-visible {
+        outline: none;
+      }
     }
   }
 
