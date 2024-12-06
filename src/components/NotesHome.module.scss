@@ -1,47 +1,47 @@
 .container {
   display: flex;
   flex-direction: column;
+
   &__header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     position: relative;
     margin-bottom: 2rem;
-
-    h3 {
-      display: flex;
-      align-items: center;
-      margin: 0;
-    }
+    padding: .625rem;
 
     &__add {
       display: flex;
       align-items: center;
       justify-items: center;
       border: none;
-      color: #ffd95a;
+      color: #ffffff;
       border-radius: 50%;
       padding: 0;
       cursor: pointer;
-      background-color: transparent;
+      background-color: #ffd95a;
+      transition: transform 0.2s ease-in-out;
 
       &:hover {
-        background-color: #ffd95a;
-        color: #ffffff;
+        background-color: #e5c55c;
       }
 
       &:active {
         transform: scale(0.95);
-        background-color: #e5c55c;
       }
 
       &:focus-visible {
         outline: none;
+      }
+
+      &--pulse {
+        animation: pulse 1s infinite;
       }
     }
   }
 
   &__empty {
     align-self: center;
+    font-size: 1.5rem;
   }
 
   &__list {
@@ -104,5 +104,20 @@
         }
       }
     }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 217, 90, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px 10px rgba(255, 217, 90, 0.2);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 217, 90, 0);
   }
 }

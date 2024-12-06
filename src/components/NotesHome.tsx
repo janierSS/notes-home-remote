@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useDeleteNoteMutation,
   useGetNotesQuery,
@@ -14,23 +14,41 @@ const NotesHome: React.FC = () => {
   const { data: notes, isLoading } = useGetNotesQuery();
   const [deleteNote] = useDeleteNoteMutation();
 
+  const [pulse, setPulse] = useState(true)
+
+  useEffect(() => {
+    if(notes?.length === 0) {
+      setPulse(true)
+    }
+  }, [notes])
+
   const handleDelete = (noteId: number) => {
     deleteNote(noteId);
+    setPulse(false)
   };
+
+  const handleOpenForm = () => {
+    setShowNewNoteForm(true)
+    setPulse(false)
+  }
+
+  const handleCloseForm = () => {
+    setShowNewNoteForm(false)
+    setPulse(notes?.length === 0)
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles["container__header"]}>
-        <h3>Your Notes</h3>
         <button
-          className={styles["container__header__add"]}
-          onClick={() => setShowNewNoteForm(true)}
+          className={`${styles["container__header__add"]} ${pulse && styles["container__header__add--pulse"]}` }
+          onClick={handleOpenForm}
         >
-          <IoMdAdd size={32} />
+          <IoMdAdd size={40} />
         </button>
 
         {showNewNoteForm && (
-          <Modal onClose={() => setShowNewNoteForm(false)}>
+          <Modal onClose={handleCloseForm}>
             <AddNoteForm setShowNewNoteForm={setShowNewNoteForm} />
           </Modal>
         )}
