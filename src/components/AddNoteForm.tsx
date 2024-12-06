@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from "react";
+import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import styles from "./AddNoteForm.module.scss";
 import { NewNoteFormValues } from "../types/types";
@@ -14,18 +14,15 @@ const AddNoteForm: React.FC<AddNoteFormProps> = ({ setShowNewNoteForm }) => {
     register,
     handleSubmit,
     reset,
+    setFocus,
     formState: { errors },
   } = useForm<NewNoteFormValues>();
-
-  const usernameRef = useRef<HTMLInputElement>(null);
 
   const [addNote] = useAddNoteMutation();
 
   useEffect(() => {
-    if (usernameRef.current) {
-      usernameRef.current.focus();
-    }
-  }, []);
+    setFocus("title");
+  }, [setFocus]);
 
   const onSubmit: SubmitHandler<NewNoteFormValues> = (data) => {
     const newNote: NewNoteFormValues = {
@@ -46,7 +43,7 @@ const AddNoteForm: React.FC<AddNoteFormProps> = ({ setShowNewNoteForm }) => {
       <div className={styles["container__header"]}>
         <h4 className={styles["container__header__text"]}>New Note</h4>
         <button type="button" onClick={() => setShowNewNoteForm(false)}>
-          <IoMdClose size={24}/>
+          <IoMdClose size={24} />
         </button>
       </div>
       <form
@@ -54,26 +51,33 @@ const AddNoteForm: React.FC<AddNoteFormProps> = ({ setShowNewNoteForm }) => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className={styles["container__form__inputs"]}>
-          <label>Title:</label>
+          <label htmlFor="title">Title:</label>
           <input
             {...register("title", { required: "Title is required" })}
             type="text"
-            ref={usernameRef}
+            id="title"
           />
           {errors.title && (
-            <p className={styles["container__form__inputs__error"]}>{errors.title.message}</p>
+            <p className={styles["container__form__inputs__error"]}>
+              {errors.title.message}
+            </p>
           )}
         </div>
         <div className={styles["container__form__inputs"]}>
-          <label>Content:</label>
+          <label htmlFor="content">Content:</label>
           <textarea
             {...register("content", { required: "Content is required" })}
+            id="content"
           />
           {errors.content && (
-            <p className={styles["container__form__inputs__error"]}>{errors.content.message}</p>
+            <p className={styles["container__form__inputs__error"]}>
+              {errors.content.message}
+            </p>
           )}
         </div>
-        <button className={styles["container__form__button"]} type="submit">Save</button>
+        <button className={styles["container__form__button"]} type="submit">
+          Save
+        </button>
       </form>
     </div>
   );

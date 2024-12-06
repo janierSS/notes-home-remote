@@ -7,6 +7,7 @@ import {
   useGetNotesQuery,
 } from "../services/notesApiSlice";
 import { IoMdAdd } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
 import styles from "./NotesHome.module.scss";
 import AddNoteForm from "./AddNoteForm";
 import Modal from "./Modal";
@@ -43,8 +44,11 @@ const NotesHome: React.FC = () => {
       <ul className={styles["container__list"]}>
         {notes?.map((note) => (
           <li className={styles["container__list__item"]} key={note.id}>
-            <h5>{note.title}</h5>
-            <button onClick={() => handleDelete(note.id)}>Delete</button>
+            <div className={styles["container__list__item__text"]}>
+              <h4>{note.title}</h4>
+              <p>{note.content}</p>
+            </div>
+            <button onClick={() => handleDelete(note.id)}><MdDelete size={30}/></button>
           </li>
         ))}
       </ul>
